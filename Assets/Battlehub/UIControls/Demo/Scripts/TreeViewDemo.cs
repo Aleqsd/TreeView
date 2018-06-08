@@ -137,18 +137,15 @@ namespace Battlehub.UIControls
 
                 //Load icon from resources
                 Image icon2 = e.ItemPresenter.GetComponentsInChildren<Image>()[5];
-                icon2.sprite = Resources.Load<Sprite>("cube");
-                icon2.color = Color.blue;
+                icon2.sprite = Resources.Load<Sprite>("ExpandSelf");
 
                 //Load icon from resources
                 Image icon3 = e.ItemPresenter.GetComponentsInChildren<Image>()[6];
-                icon3.sprite = Resources.Load<Sprite>("cube");
-                icon3.color = Color.red;
+                icon3.sprite = Resources.Load<Sprite>("Expand");
 
                 //Load icon from resources
                 Image icon4 = e.ItemPresenter.GetComponentsInChildren<Image>()[7];
-                icon4.sprite = Resources.Load<Sprite>("cube");
-                icon4.color = Color.green;
+                icon4.sprite = Resources.Load<Sprite>("Hide");
 
                 //And specify whether data item has children (to display expander arrow if needed)
                 if (dataItem.name != "TreeView")

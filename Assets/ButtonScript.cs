@@ -19,6 +19,8 @@ public class ButtonScript : ItemsControl
             GetComponent<Button>().onClick.AddListener(SelectExpanded);
         if (GetComponent<Button>().name.Equals("ExpandSelfButton"))
             GetComponent<Button>().onClick.AddListener(SelectExpandedPlusSelf);
+        if (GetComponent<Button>().name.Equals("ShowHideButton"))
+            GetComponent<Button>().onClick.AddListener(ShowHide);
 
         TreeViewItem = transform.parent.parent.parent.GetComponent<TreeViewItem>();
         TreeView = transform.parent.parent.parent.parent.parent.parent.GetComponent<TreeView>();
@@ -69,7 +71,10 @@ public class ButtonScript : ItemsControl
     {
         TreeViewItem.IsExpanded = true;
 
-        TreeViewItem firstChild = TreeViewItem.FirstChild();
+        if (!TreeViewItem.HasChildren)
+            return;
+
+            TreeViewItem firstChild = TreeViewItem.FirstChild();
         firstItem = firstChild;
 
         if (TreeViewItem.FirstChild() != null)
@@ -85,6 +90,9 @@ public class ButtonScript : ItemsControl
     {
         TreeViewItem.IsExpanded = true;
 
+        if (!TreeViewItem.HasChildren)
+            return;
+
         TreeViewItem firstChild = TreeViewItem.FirstChild();
         firstItem = firstChild;
 
@@ -95,5 +103,14 @@ public class ButtonScript : ItemsControl
         int lastIndex = FindItemIndex(lastItem) + 1;
 
         TreeView.SelectedItems = TreeView.Items.OfType<object>().Skip(firstIndex).Take(lastIndex - firstIndex);
+    }
+
+    public void ShowHide()
+    {
+        GameObject itemGameObject = (GameObject)TreeViewItem.Item;
+        if (itemGameObject.activeSelf)
+            itemGameObject.SetActive(false);
+        else
+            itemGameObject.SetActive(true);
     }
 }

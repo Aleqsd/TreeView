@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class ButtonScript : ItemsControl
 {
-
     private TreeViewItem TreeViewItem;
     private TreeView TreeView;
     private TreeViewItem firstItem, lastItem;
@@ -16,14 +15,35 @@ public class ButtonScript : ItemsControl
     private void Start()
     {
         if (GetComponent<Button>().name.Equals("ExpandButton"))
+        {
+            TreeViewItem = transform.parent.parent.parent.GetComponent<TreeViewItem>();
+            TreeView = transform.parent.parent.parent.parent.parent.parent.GetComponent<TreeView>();
             GetComponent<Button>().onClick.AddListener(SelectExpanded);
+        }
         if (GetComponent<Button>().name.Equals("ExpandSelfButton"))
+        {
+            TreeViewItem = transform.parent.parent.parent.GetComponent<TreeViewItem>();
+            TreeView = transform.parent.parent.parent.parent.parent.parent.GetComponent<TreeView>();
             GetComponent<Button>().onClick.AddListener(SelectExpandedPlusSelf);
+        }
         if (GetComponent<Button>().name.Equals("ShowHideButton"))
+        {
+            TreeViewItem = transform.parent.parent.parent.GetComponent<TreeViewItem>();
+            TreeView = transform.parent.parent.parent.parent.parent.parent.GetComponent<TreeView>();
             GetComponent<Button>().onClick.AddListener(ShowHide);
+        }
+        if (GetComponent<Button>().name.Equals("TeleportButton"))
+        {
+            TreeView = transform.parent.parent.GetComponent<TreeView>();
+            GetComponent<Button>().onClick.AddListener(Teleport);
+        }
+        if (GetComponent<Button>().name.Equals("HighlightButton"))
+        {
+            TreeView = transform.parent.parent.GetComponent<TreeView>();
+            GetComponent<Button>().onClick.AddListener(Highlight);
+        }
 
-        TreeViewItem = transform.parent.parent.parent.GetComponent<TreeViewItem>();
-        TreeView = transform.parent.parent.parent.parent.parent.parent.GetComponent<TreeView>();
+
     }
 
     private void ExpandOneLevel(TreeViewItem theItem)
@@ -112,5 +132,26 @@ public class ButtonScript : ItemsControl
             itemGameObject.SetActive(false);
         else
             itemGameObject.SetActive(true);
+    }
+
+    public void Teleport()
+    {
+        GameObject firstSelectedGameObject = (GameObject)TreeView.SelectedItem;
+        if (firstSelectedGameObject != null)
+            Debug.Log("Teleporting to " + firstSelectedGameObject.transform.position.ToString());
+    }
+
+    public void Highlight()
+    {
+        GameObject firstSelectedGameObject = (GameObject)TreeView.SelectedItem;
+        if (firstSelectedGameObject != null)
+        {
+            Debug.Log("Highlighting " + firstSelectedGameObject.name);
+            foreach (GameObject itemGO in TreeView.Items.OfType<GameObject>())
+            {
+                if (itemGO.name != firstSelectedGameObject.name)
+                    itemGO.SetActive(false);
+            }
+        }
     }
 }
